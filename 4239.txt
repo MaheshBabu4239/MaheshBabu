@@ -1,0 +1,90 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <conio.h>
+
+int i = 0;           // Global index to traverse the string
+char s[10];          // Input string
+
+void S();            // Function prototype for parsing S
+void A();            // Function prototype for parsing A
+void B();            // Function prototype for parsing B
+void error();        // Function prototype for error handling
+
+int main() {
+    printf("Given grammar is:\n");
+    printf("S -> aBb | ccA\n");
+    printf("A -> b | c\n");
+    printf("B -> a | b\n");
+   
+    printf("Enter the string: ");
+    scanf("%s", s);
+   
+    S();  // Start parsing with the start symbol S
+   
+    if (s[i] == '\0') {  // Check if the entire string has been consumed
+        printf("String is valid\n");
+    } else {
+        printf("String is invalid\n");
+    }
+   
+    getch();  // Wait for a key press
+    return 0;
+}
+
+void S() {
+    if (s[i] == 'a') {
+        i++;
+        B();  // Parse B
+        if (s[i] == 'b') {
+            i++;
+        } else {
+            error();  // Error if 'b' not found
+        }
+    } else if (s[i] == 'c') {
+        i++;
+        if (s[i] == 'c') {
+            i++;
+            A();  // Parse A
+        } else {
+            error();  // Error if second 'c' not found
+        }
+    } else {
+        error();  // Error if neither 'a' nor 'c' is found
+    }
+}
+
+void A() {
+    if (s[i] == 'b' || s[i] == 'c') {
+        i++;
+    } else {
+        error();  // Error if neither 'b' nor 'c' is found
+    }
+}
+
+void B() {
+    if (s[i] == 'a' || s[i] == 'b') {
+        i++;
+    } else {
+        error();  // Error if neither 'a' nor 'b' is found
+    }
+}
+
+void error() {
+    printf("String is invalid\n");
+    getch();  // Wait for a key press
+    exit(0);  // Exit the program
+}
+
+OUTPUT:
+
+OUTPUT:
+
+Given grammar is S -> aBb/ccA
+A -> b/c B -> a/b
+Enter the string abb
+string is valid
+
+Given grammar is S -> aBb/ccA
+A -> b/c B -> a/b
+Enter the string cca
+string is invalid
